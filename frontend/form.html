@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login form</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="./public/css/output.css">
+</head>
+
+<body class="flex flex-col items-center">
+    <section class="flex flex-col mx-5">
+        <h1 class="text-3xl font-semibold mb-6 mt-6">REGISTER FOR FREE</h1>
+        <h3 class="text-2xl font-semibold mb-2">Awesome perks for joining STRIDEX:</h3>
+        <ul class="mb-6">
+            <li class="flex items-center gap-2">
+                <img src="bullet-point.svg" alt="bullet point" class="h-3">
+                <p class="text-xl">
+                    20% off your first purchase <span class="underline inline font-medium">online</span>.
+                </p>
+            </li>
+            <li class="flex items-center gap-2">
+                <img src="bullet-point.svg" alt="bullet point" class="h-3">
+                <p class="text-xl">
+                    Personalized recommendations and custom discounts.
+                </p>
+            </li>
+            <li class="flex items-center gap-2">
+                <img src="bullet-point.svg" alt="bullet point" class="h-3">
+                <p class="text-xl">
+                    Gifts on your birthday.
+                </p>
+            </li>
+        </ul>
+        <form id="form" class="flex flex-col">
+            <p class="text-3xl font-semibold text-slate-950">QUICK SIGN UP PROCESS!</p>
+
+            <!-- Username form input -->
+            <div class="flex flex-col" id="usernameDefaultField">
+                <span>
+                    <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-slate-950">Username</h3>
+                </span>
+                <input type="text" id="usernameInput" class="outline-1 outline-gray-500 text-gray-500 px-5 py-3 mb-3">
+            </div>
+            <div class="hidden flex-col" id="usernameErrorField">
+                <span>
+                    <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">Username</h3>
+                </span>
+                <input type="text" id="usernameInput" required
+                    class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
+            </div>
+
+            <!-- Email form input -->
+            <div class="flex flex-col" id="emailDefaultField">
+                <span>
+                    <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-slate-950">Email (optional)</h3>
+                </span>
+                <input type="text" id="emailInput" required
+                    class="outline-1 outline-gray-500 text-gray-500 px-5 py-3 mb-3">
+            </div>
+            <div class="hidden flex-col" id="emailErrorField">
+                <span>
+                    <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">Email
+                        (optional)</h3>
+                </span>
+                <input type="text" id="emailInput" required
+                    class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
+            </div>
+
+            <!-- Password form input -->
+            <div class="flex flex-col" id="passwordDefaultField">
+                <span>
+                    <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-slate-950">Password</h3>
+                </span>
+                <input type="password" id="passwordInput" required
+                    class="outline-1 outline-gray-500 text-gray-500 px-5 py-3 mb-6">
+            </div>
+            <div class="hidden flex-col" id="passwordDefaultField">
+                <span>
+                    <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">Password
+                    </h3>
+                </span>
+                <input type="text" id="passwordInput" required
+                    class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
+            </div>
+
+            <button type="submit" class="flex gap-4 bg-slate-950 p-4 font-semibold text-xl mt-4 w-full cursor-pointer">
+                <p class="text-white">CREATE ACCOUNT</p>
+                <img src="right-arrow.svg" class="w-5">
+            </button>
+            <div class="relative my-4">
+                <hr class="border-t border-gray-300">
+                <span
+                    class="absolute left-1/2 transform -translate-x-1/2 top-[-0.7em] bg-white px-2 text-gray-500">OR</span>
+            </div>
+
+        </form>
+
+        <p id="errorMessage"></p>
+    </section>
+
+    <script>
+        const form = document.getElementById('form')
+        const errorMessage = document.getElementById('errorMessage')
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+
+            document.getElementById('usernameDefaultField').classList.add('flex')
+            document.getElementById('usernameDefaultField').classList.remove('hidden')
+            document.getElementById('usernameErrorField').classList.add('hidden')
+            document.getElementById('usernameErrorField').classList.remove('flex')
+
+            document.getElementById('emailDefaultField').classList.add('flex')
+            document.getElementById('emailDefaultField').classList.remove('hidden')
+            document.getElementById('emailErrorField').classList.add('hidden')
+            document.getElementById('emailErrorField').classList.remove('flex')
+
+            document.getElementById('passwordDefaultField').classList.add('flex')
+            document.getElementById('passwordDefaultField').classList.remove('hidden')
+            document.getElementById('passwordErrorField').classList.add('hidden')
+            document.getElementById('passwordErrorField').classList.remove('flex')
+
+            const usernameValue = document.getElementById('usernameInput').value
+            const emailValue = document.getElementById('emailInput').value
+            const passwordValue = document.getElementById('passwordInput').value
+
+            if (!usernameValue) {
+                document.getElementById('usernameDefaultField').classList.remove('flex')
+                document.getElementById('usernameDefaultField').classList.add('hidden')
+                document.getElementById('usernameErrorField').classList.remove('hidden')
+                document.getElementById('usernameErrorField').classList.add('flex')
+            }
+            axios.post('/login', {
+                email: emailValue,
+                password: passwordValue
+            }).then(response => {
+                console.log(response);
+
+                errorMessage.textContent = 'test'
+                errorMessage.style.color = 'green'
+
+            }).catch(err => {
+
+                errorMessage.textContent = 'test'
+                errorMessage.style.color = 'red'
+                console.log('t2');
+            })
+        })
+    </script>
+</body>
+
+</html>
