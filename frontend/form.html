@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="./public/css/output.css">
 </head>
 
-<body class="flex flex-col items-center">
+<body class="flex flex-col items-center smoothAppear">
     <section class="flex flex-col mx-5">
         <h1 class="text-3xl font-semibold mb-6 mt-6">REGISTER FOR FREE</h1>
-        <h3 class="text-2xl font-semibold mb-2">Awesome perks for joining STRIDEX:</h3>
+        <h3 class="text-2xl font-semibold mb-2">Awesome perks for joining Trybite:</h3>
         <ul class="mb-6">
             <li class="flex items-center gap-2">
                 <img src="bullet-point.svg" alt="bullet point" class="h-3">
@@ -49,8 +49,7 @@
                 <span>
                     <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">Username</h3>
                 </span>
-                <input type="text" id="usernameInput" required
-                    class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
+                <input type="text" id="usernameInput" class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
             </div>
 
             <!-- Email form input -->
@@ -58,16 +57,14 @@
                 <span>
                     <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-slate-950">Email (optional)</h3>
                 </span>
-                <input type="text" id="emailInput" required
-                    class="outline-1 outline-gray-500 text-gray-500 px-5 py-3 mb-3">
+                <input type="text" id="emailInput" class="outline-1 outline-gray-500 text-gray-500 px-5 py-3 mb-3">
             </div>
             <div class="hidden flex-col" id="emailErrorField">
                 <span>
                     <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">Email
                         (optional)</h3>
                 </span>
-                <input type="text" id="emailInput" required
-                    class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
+                <input type="text" id="emailInput" class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
             </div>
 
             <!-- Password form input -->
@@ -75,19 +72,19 @@
                 <span>
                     <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-slate-950">Password</h3>
                 </span>
-                <input type="password" id="passwordInput" required
+                <input type="password" id="passwordInput"
                     class="outline-1 outline-gray-500 text-gray-500 px-5 py-3 mb-6">
             </div>
-            <div class="hidden flex-col" id="passwordDefaultField">
+            <div class="hidden flex-col" id="passwordErrorField">
                 <span>
                     <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">Password
                     </h3>
                 </span>
-                <input type="text" id="passwordInput" required
-                    class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3">
+                <input type="text" id="passwordInput" class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-6">
             </div>
 
-            <button type="submit" class="flex gap-4 bg-slate-950 p-4 font-semibold text-xl mt-4 w-full cursor-pointer">
+            <button type="submit" id="submitBtn"
+                class="flex gap-4 bg-slate-950 p-4 font-semibold text-xl mt-4 w-full cursor-pointer mb-6">
                 <p class="text-white">CREATE ACCOUNT</p>
                 <img src="right-arrow.svg" class="w-5">
             </button>
@@ -108,6 +105,11 @@
 
         form.addEventListener('submit', e => {
             e.preventDefault()
+
+            document.getElementById('submitBtn').classList.remove('shake');
+            void document.getElementById('submitBtn').offsetWidth;
+
+            document.getElementById('submitBtn').classList.add('shake');
 
             document.getElementById('usernameDefaultField').classList.add('flex')
             document.getElementById('usernameDefaultField').classList.remove('hidden')
@@ -145,12 +147,53 @@
 
             }).catch(err => {
 
-                errorMessage.textContent = 'test'
+                errorMessage.textContent = 'vedi userneima pimpi'
                 errorMessage.style.color = 'red'
                 console.log('t2');
             })
         })
     </script>
+    <style>
+        @keyframes shake {
+            0% {
+                transform: translateX(-5px);
+            }
+
+            20% {
+                transform: translateX(5px);
+            }
+
+            40% {
+                transform: translateX(-5px);
+            }
+
+            60% {
+                transform: translateX(5px);
+            }
+
+            80% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes smoothAppear {
+            0% {
+                opacity: 0;
+            }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        .smoothAppear {
+            animation: smoothAppear 1.4s ease-in-out;
+        }
+    </style>
 </body>
 
 </html>
