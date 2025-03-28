@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login form</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="/frontend/public/css/output.css" />
+</head>
+
+<body class="flex flex-col items-center smoothAppear">
+    <section class="flex flex-col mx-5">
+        <div class="flex flex-col w-96 text-center">
+            <form id="form">
+                <h1 class="text-3xl font-semibold mt-6 mb-1 pb-1.5">REGISTER FOR FREE</h1>
+                <div id="" class="hidden w-full border border-red-500 bg-red-300 rounded-sm p-2">er</div>
+                <!-- Username form input -->
+                <div class="flex flex-col text-left" id="usernameDefaultField">
+                    <span>
+                        <h3 class="translate-y-2.5 bg-white ml-2 px-3 inline-block text-slate-950">
+                            Username
+                        </h3>
+                    </span>
+                    <input type="text" id="usernameInput" class="outline-1 text-gray-500 px-5 py-3 mb-3" />
+                </div>
+                <div class="hidden flex-col text-left" id="usernameErrorField">
+                    <span>
+                        <h3 class="translate-y-2.5 bg-white ml-2 pt-3 pb-1.5 inline-block text-red-500">
+                            Username
+                        </h3>
+                    </span>
+                    <input type="text" id="usernameInput"
+                        class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3" />
+                </div>
+
+                <!-- Email form input -->
+                <div class="flex flex-col text-left" id="emailDefaultField">
+                    <span>
+                        <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-slate-950">
+                            Email (optional)
+                        </h3>
+                    </span>
+                    <input type="text" id="emailInput" class="outline-1 text-gray-500 px-5 py-3 mb-3" />
+                </div>
+                <div class="hidden flex-col text-left" id="emailErrorField">
+                    <span>
+                        <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">
+                            Email (optional)
+                        </h3>
+                    </span>
+                    <input type="text" id="emailInput" class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-3" />
+                </div>
+
+                <!-- Password form input -->
+                <div class="flex flex-col text-left" id="passwordDefaultField">
+                    <span>
+                        <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-slate-950">
+                            Password
+                        </h3>
+                    </span>
+                    <input type="password" id="passwordInput" class="outline-1 text-gray-500 px-5 py-3 mb-6" />
+                </div>
+                <div class="hidden flex-col text-left" id="passwordErrorField">
+                    <span>
+                        <h3 class="translate-y-2.5 bg-white ml-2 px-1.5 inline-block text-red-500">
+                            Password
+                        </h3>
+                    </span>
+                    <input type="text" id="passwordInput"
+                        class="outline-1 outline-red-500 text-red-500 px-5 py-3 mb-6" />
+                </div>
+
+                <button type="submit" id="submitBtn"
+                    class="flex justify-between gap-4 bg-emerald-500 outline-emerald-500 p-4 font-semibold text-xl mt-4 w-full cursor-pointer mb-6">
+                    <p id="submitBtnText" class="text-white">CREATE ACCOUNT</p>
+                    <img src="/frontend/public/photographic/right-arrow-black.svg" id="submitBtnImg" class="w-5" />
+                </button>
+            </form>
+            <!-- Divider between the form and other sign up methods -->
+            <div class="relative my-3">
+                <hr class="border-t border-gray-300" />
+                <span
+                    class="absolute left-1/2 transform -translate-x-1/2 top-[-0.7em] bg-white px-2 text-gray-500">OR</span>
+            </div>
+            <button id="continueGoogleBtn"
+                class="flex justify-between gap-4 outline-2 outline-slate-950 p-4 font-semibold text-xl mt-4 w-full cursor-pointer mb-6">
+                <p id="continueGoogleBtnText" class="text-slate-950">CONTINUE WITH GOOGLE</p>
+                <img src="/frontend/public/photographic/google-logo.svg" class="w-7" />
+            </button>
+
+            <a href="#" class="text-emerald-500 underline font-semibold text-md">Already have an account? Log in</a>
+        </div>
+    </section>
+
+    <script>
+        const form = document.getElementById("form");
+        const errorMessage = document.getElementById("errorMessage");
+
+        const usernameDefaultField = document.getElementById('usernameDefaultField')
+        const usernameErrorField = document.getElementById('usernameErrorField')
+        const emailDefaultField = document.getElementById('emailDefaultField')
+        const emailErrorField = document.getElementById('emailErrorField')
+        const passwordDefaultField = document.getElementById('passwordDefaultField')
+        const passwordErrorField = document.getElementById('passwordErrorField')
+
+        // VISUAL EFFECTS
+        // Continue with google button
+        const continueGoogleBtn = document.getElementById('continueGoogleBtn')
+        const continueGoogleBtnText = document.getElementById('continueGoogleBtnText')
+
+        continueGoogleBtn.addEventListener('mouseenter', () => {
+            continueGoogleBtnText.classList.add('text-white')
+            continueGoogleBtnText.classList.add('text-slate-950')
+
+            continueGoogleBtn.classList.add('bg-slate-950')
+            continueGoogleBtn.classList.remove('bg-white')
+            continueGoogleBtn.classList.remove('outline-2')
+        })
+
+        continueGoogleBtn.addEventListener('mouseleave', () => {
+            continueGoogleBtnText.classList.add('text-slate-950')
+            continueGoogleBtnText.classList.remove('text-white')
+
+            continueGoogleBtn.classList.add('bg-white')
+            continueGoogleBtn.classList.remove('bg-slate-950')
+            continueGoogleBtn.classList.add('outline-2')
+        })
+
+        // Create account button
+        const submitBtn = document.getElementById('submitBtn')
+        const submitBtnText = document.getElementById('submitBtnText')
+        const submitBtnImg = document.getElementById('submitBtnImg')
+
+        submitBtn.addEventListener('mouseenter', () => {
+            submitBtnText.classList.add('text-emerald-500')
+            submitBtnText.classList.remove('text-white')
+
+            submitBtn.classList.add('bg-white')
+            submitBtn.classList.remove('bg-emerald-500')
+            submitBtn.classList.add('outline-2')
+
+            submitBtnImg.src = '/frontend/public/photographic/right-arrow-green.svg'
+        })
+
+        submitBtn.addEventListener('mouseleave', () => {
+            submitBtnText.classList.add('text-white')
+            submitBtnText.classList.add('text-emerald-500')
+
+            submitBtn.classList.add('bg-emerald-500')
+            submitBtn.classList.remove('bg-white')
+            submitBtn.classList.remove('outline-2')
+
+            submitBtnImg.src = '/frontend/public/photographic/right-arrow-black.svg'
+        })
+
+        function usernameDefault() {
+            usernameDefaultField.classList.add("flex");
+            usernameDefaultField.classList.remove("hidden");
+            usernameErrorField.classList.add("hidden");
+            usernameErrorField.classList.remove("flex");
+        }
+
+        function usernameError() {
+            usernameDefaultField.classList.remove("flex");
+            usernameDefaultField.classList.add("hidden");
+            usernameErrorField.classList.remove("hidden");
+            usernameErrorField.classList.add("flex");
+        }
+
+        function emailDefault() {
+            emailDefaultField.classList.add("flex");
+            emailDefaultField.classList.remove("hidden");
+            emailErrorField.classList.add("hidden");
+            emailErrorField.classList.remove("flex");
+        }
+
+        function emailError() {
+            emailDefaultField.classList.add("hidden");
+            emailDefaultField.classList.remove("flex");
+            emailErrorField.classList.add("flex");
+            emailErrorField.classList.remove("hidden");
+        }
+
+        function passwordDefault() {
+            passwordDefaultField.classList.add("flex");
+            passwordDefaultField.classList.remove("hidden");
+            passwordErrorField.classList.add("hidden");
+            passwordErrorField.classList.remove("flex");
+        }
+
+        function passwordError() {
+            passwordDefaultField.classList.add("hidden");
+            passwordDefaultField.classList.remove("flex");
+            passwordErrorField.classList.add("flex");
+            passwordErrorField.classList.remove("hidden");
+        }
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            usernameDefault();
+            emailDefault();
+            passwordDefault();
+
+            // Form validation
+            const usernameValue = document.getElementById("usernameInput").value;
+            const emailValue = document.getElementById("emailInput").value;
+            const passwordValue = document.getElementById("passwordInput").value;
+
+            validInputs = {
+                usernameValid: true,
+                emailValid: true,
+                passwordValid: true
+            }
+
+            function usernameValidator() {
+                
+            }
+
+            if (!usernameValue || !emailValue || !passwordValue) {
+                document.getElementById("submitBtn").classList.remove("shake");
+                void document.getElementById("submitBtn").offsetWidth;
+
+                document.getElementById("submitBtn").classList.add("shake");
+            }
+
+            axios
+                .post("/login", {
+                    email: emailValue,
+                    password: passwordValue,
+                })
+                .then((response) => {
+                    console.log(response);
+
+                    errorMessage.textContent = "test";
+                    errorMessage.style.color = "green";
+                })
+                .catch((err) => {
+                    errorMessage.style.color = "red";
+                    console.log("t2");
+                });
+        });
+    </script>
+    <style>
+        @keyframes shake {
+            0% {
+                transform: translateX(-5px);
+            }
+
+            20% {
+                transform: translateX(5px);
+            }
+
+            40% {
+                transform: translateX(-5px);
+            }
+
+            60% {
+                transform: translateX(5px);
+            }
+
+            80% {
+                transform: translateX(-5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes smoothAppear {
+            0% {
+                opacity: 0;
+            }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        .smoothAppear {
+            animation: smoothAppear 1.4s ease-in-out;
+        }
+    </style>
+</body>
+
+</html>
