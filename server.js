@@ -3,6 +3,7 @@ const path = require('path')
 const rateLimit = require('express-rate-limit')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
+require('dotenv').config()
 
 const mongoSchema = new mongoose.Schema({
     username: {
@@ -24,8 +25,8 @@ const mongoSchema = new mongoose.Schema({
 const User = mongoose.model('User', mongoSchema)
 
 mongoose.connect('mongodb://localhost:27017/Trybite')
-    .then(() => console.log("Connected to MongoDB"))
-    .catch(err => console.error("MongoDB Connection Error:", err));
+    .then(() => console.log("✅ Connected to MongoDB successfully!"))
+    .catch(err => console.error("❌ MongoDB Connection Error:", err));
 
 const app = express()
 
@@ -38,12 +39,22 @@ const logger = rateLimit({
     })
 })
 
-app.use(logger, express.json(), express.urlencoded({ extended: true }), express.static('./frontend'))
+app.use(logger, express.json(), express.urlencoded({ extended: true }), express.static(path.join(__dirname)))
 
 app.get('/login', (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, 'frontend', 'form.html'))
+    res.status(200).sendFile(path.join(__dirname, 'frontend', 'src', 'pages', 'form.html'))
 })
 
+app.post('/usernameValidator', async (req, res) => {
+    const { username } = req.body
+    console.log(req.body);
+
+    const isFound = await User.findOne({ username })
+    if (isFound) {
+        return res.status(409).send('Username already taken!')
+    }
+    res.status(200).send('Username valid!')
+})
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body
@@ -61,4 +72,6 @@ app.post('/login', async (req, res) => {
     }
 })
 
-app.listen(3000)
+app.listen(process.env.PORT, () => {
+    console.log(`✅ Localhost server running on port: http://localhost:${process.env.PORT}`);
+})
