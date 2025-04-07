@@ -8,18 +8,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-
-    <link rel="stylesheet" href="/frontend/public/css/output.css">
+    <link rel="stylesheet" href="/frontend/public/css/output.css" />
 </head>
 
 <body class="flex flex-col items-center smoothAppear relative bg-slate-100">
     <section class="flex items-center justify-between mx-5 h-screen">
         <div class="flex flex-col absolute top-0 right-0 h-screen w-1/4 bg-emerald-500">
             <div class="p-8">
-                <h1 id="sidebarTitle" class="text-white text-3xl font-bold inline-block mb-4">A few clicks away from
-                    becoming
-                    a
-                    world-class chef.</h1>
+                <h1 id="sidebarTitle" class="text-white text-3xl font-bold inline-block mb-4">
+                    A few clicks away from becoming a world-class chef.
+                </h1>
                 <ul class="text-slate-100 text-xl font-semibold">
                     <li>Save beloved recipes,</li>
                     <li>Upload your masterpieces,</li>
@@ -28,17 +26,19 @@
                 </ul>
             </div>
             <img src="/frontend/public/photographic/green-bowl.png" class="absolute bottom-0 w-full h-[55vh]"
-                alt="Food image">
+                alt="Food image" />
         </div>
         <div class="flex flex-col w-96 text-center -translate-y-32">
             <form id="form">
-                <h1 class="text-3xl font-semibold mb-2">REGISTER FOR FREE</h1>
+                <h1 class="text-3xl font-semibold mb-2">
+                    REGISTER FOR FREE
+                </h1>
                 <div class="flex flex-col gap-2">
                     <!-- Username form input -->
                     <div class="flex flex-col text-left" id="usernameField">
                         <span>
                             <h3 id="usernameLabel"
-                                class="translate-y-2.5 bg-slate-100 ml-2 px-3 inline-block text-black">
+                                class="translate-y-2.5 bg-slate-100 ml-2 px-3 inline-block text-slate-900">
                                 Username
                             </h3>
                         </span>
@@ -51,12 +51,12 @@
                     <div class="flex flex-col text-left" id="passwordField">
                         <span>
                             <h3 id="passwordLabel"
-                                class="translate-y-2.5 bg-slate-100 ml-2 px-1.5 inline-block text-black">
+                                class="translate-y-2.5 bg-slate-100 ml-2 px-1.5 inline-block text-slate-900">
                                 Password
                             </h3>
                         </span>
                         <input type="password" id="passwordInput" class="outline-1 text-gray-500 px-5 py-3"
-                            maxlength="32" />
+                            maxlength="128" />
                         <p id="passwordError" class="text-xs text-red-600 mt-1 invisible h-1"></p>
                     </div>
 
@@ -64,7 +64,7 @@
                     <div class="flex flex-col text-left mb-6" id="emailField">
                         <span>
                             <h3 id="emailLabel"
-                                class="translate-y-2.5 bg-slate-100 ml-2 px-1.5 inline-block text-black">
+                                class="translate-y-2.5 bg-slate-100 ml-2 px-1.5 inline-block text-slate-900">
                                 Email (optional)
                             </h3>
                         </span>
@@ -74,9 +74,11 @@
                 </div>
 
                 <button type="submit" id="submitBtn"
-                    class="flex justify-between gap-4 bg-emerald-500 outline-emerald-500 p-4 font-semibold text-xl mt-4 w-full cursor-pointer mb-6">
-                    <p id="submitBtnText" class="text-slate-100">CREATE ACCOUNT</p>
-                    <img src="/frontend/public/photographic/right-arrow-black.svg" id="submitBtnImg" class="w-5" />
+                    class="flex justify-between gap-4 bg-emerald-500 text-slate-100 p-4 font-semibold text-xl mt-4 w-full cursor-pointer mb-6 hover:bg-slate-100 outline-2 outline-emerald-500 hover:text-emerald-500">
+                    <p id="submitBtnText">
+                        CREATE ACCOUNT
+                    </p>
+                    <img src="/frontend/public/photographic/right-arrow-white.svg" id="submitBtnImg" class="w-5" />
                 </button>
             </form>
 
@@ -87,234 +89,240 @@
                     class="absolute left-1/2 transform -translate-x-1/2 top-[-0.7em] bg-slate-100 px-2 text-gray-500">OR</span>
             </div>
             <button id="continueGoogleBtn"
-                class="flex justify-between gap-4 outline-2 outline-black p-4 font-semibold mt-4 w-full cursor-pointer mb-6 text-xl">
+                class="flex justify-between gap-4 outline-2 outline-slate-900 p-4 font-semibold mt-4 w-full cursor-pointer mb-6 text-xl hover:outline-none hover:text-white hover:bg-slate-950">
                 <p id="continueGoogleBtnText">CONTINUE WITH GOOGLE</p>
                 <img src="/frontend/public/photographic/google-logo.svg" class="w-7" />
             </button>
 
             <a href="#" class="inline-block w-fit mx-auto text-emerald-500 underline font-semibold text-md">Already have
-                an account? Log
-                in</a>
+                an account? Log in</a>
         </div>
     </section>
 
     <script>
+        // Imports from HTML
         const form = document.getElementById("form");
-        let formValid = true
+        let formValid = true;
 
-        const usernameInput = document.getElementById('usernameInput')
-        const emailInput = document.getElementById('emailInput')
-        const passwordInput = document.getElementById('passwordInput')
+        const usernameInput = document.getElementById("usernameInput");
+        const emailInput = document.getElementById("emailInput");
+        const passwordInput = document.getElementById("passwordInput");
 
-        // VISUAL EFFECTS
-        // Continue with google button
-        const continueGoogleBtn = document.getElementById('continueGoogleBtn')
-        const continueGoogleBtnText = document.getElementById('continueGoogleBtnText')
+        // Visual effects
+        // On hover change color of arrows to match the style
+        submitBtn.addEventListener("mouseenter", () => {
+            submitBtnImg.src =
+                "/frontend/public/photographic/right-arrow-green.svg";
+        });
 
-        continueGoogleBtn.addEventListener('mouseenter', () => {
-            continueGoogleBtnText.classList.add('text-slate-100')
-            continueGoogleBtnText.classList.add('text-black')
+        submitBtn.addEventListener("mouseleave", () => {
+            submitBtnImg.src =
+                "/frontend/public/photographic/right-arrow-white.svg";
+        });
 
-            continueGoogleBtn.classList.add('bg-black')
-            continueGoogleBtn.classList.remove('bg-slate-100')
-            continueGoogleBtn.classList.remove('outline-2')
-        })
-
-        continueGoogleBtn.addEventListener('mouseleave', () => {
-            continueGoogleBtnText.classList.add('text-black')
-            continueGoogleBtnText.classList.remove('text-slate-100')
-
-            continueGoogleBtn.classList.add('bg-slate-100')
-            continueGoogleBtn.classList.remove('bg-black')
-            continueGoogleBtn.classList.add('outline-2')
-        })
-
-        // Create account button
-        const submitBtn = document.getElementById('submitBtn')
-        const submitBtnText = document.getElementById('submitBtnText')
-        const submitBtnImg = document.getElementById('submitBtnImg')
-
-        submitBtn.addEventListener('mouseenter', () => {
-            submitBtnText.classList.add('text-emerald-500')
-            submitBtnText.classList.remove('text-slate-100')
-
-            submitBtn.classList.add('bg-slate-100', 'outline-2')
-            submitBtn.classList.remove('bg-emerald-500')
-
-            submitBtnImg.src = '/frontend/public/photographic/right-arrow-green.svg'
-        })
-
-        submitBtn.addEventListener('mouseleave', () => {
-            submitBtnText.classList.add('text-slate-100')
-            submitBtnText.classList.add('text-emerald-500')
-
-            submitBtn.classList.add('bg-emerald-500')
-            submitBtn.classList.remove('bg-slate-100', 'outline-2')
-            submitBtnImg.src = '/frontend/public/photographic/right-arrow-black.svg'
-        })
-
-        // Input style handling, error display functions
+        // Input style handling when input has an error
         function defaultMode(field) {
-            const input = document.getElementById(`${field}Input`)
-            const label = document.getElementById(`${field}Label`)
+            // Applying default style to the input indicating that it is valid
+            const input = document.getElementById(`${field}Input`);
+            const label = document.getElementById(`${field}Label`);
 
-            label.classList.add("text-black");
-            label.classList.remove('text-red-500')
+            label.classList.add("text-slate-900");
+            label.classList.remove("text-red-500");
             input.classList.remove("outline-red-500", "text-red-500");
 
-            formValid = true
+            // Hiding the error text, since there is no error
+            const errorText = document.getElementById(`${field}Error`);
+            errorText.classList.add("invisible");
         }
 
-        function errorMode(field) {
-            const input = document.getElementById(`${field}Input`)
-            const label = document.getElementById(`${field}Label`)
+        function errorMode(field, text) {
+            // Coloring the invalid input
+            const input = document.getElementById(`${field}Input`);
+            const label = document.getElementById(`${field}Label`);
 
-            label.classList.add('text-red-500')
-            label.classList.remove("text-black");
-            input.classList.add("outline-red-500", "text-red-500")
-            input.classList.remove("text-black");
-        }
+            label.classList.add("text-red-500");
+            label.classList.remove("text-slate-900");
+            input.classList.add("outline-red-500", "text-red-500");
+            input.classList.remove("text-slate-900");
 
-        function errorTextDisplay(field, text) {
-            const errorText = document.getElementById(`${field}Error`)
-            errorText.classList.remove('invisible')
-            errorText.textContent = text
-        }
+            // Displaying error text
+            const errorText = document.getElementById(`${field}Error`);
+            errorText.classList.remove("invisible");
+            errorText.textContent = text;
 
-        function errorTextHide(field, text) {
-            const errorText = document.getElementById(`${field}Error`)
-            errorText.classList.add('invisible')
+            // Indicating invalid form
+            formValid = false;
         }
 
         // Form field event listener validators
         // regexes
         const regexes = {
             username: /^[a-zA-Z0-9_-]+$/,
-            email: /^[a-zA-Z0-9._%+-]{6,254}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-            password: /^[A-Za-z0-9@!$#%^&*()\-=+]$/
-        }
-
-        // Email validator
-        let emailValidator
-        emailInput.addEventListener('input', () => {
-
-            clearTimeout(emailValidator)
-            defaultMode('email')
-            errorTextHide('email')
-            if (emailInput.value.length == 0) {
-                defaultMode('email')
-                errorTextHide('email')
-                return
-            }
-            emailValidator = setTimeout(() => {
-                if (regexes.email.test(emailInput.value)) {
-                    defaultMode('email')
-                    errorTextHide('email')
-                    return
-                }
-                errorMode('email')
-                errorTextDisplay('email', 'Invalid email!')
-
-                axios.post("/passwordValidator", {
-                    username: usernameInput.value
-                }).catch(error => {
-                    errorMode('username')
-                    errorTextDisplay('username', error.response.data)
-                });
-            }, 1200);
-        })
+            email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/,
+            password: /^[a-zA-Z0-9!@#$%^&*()\-_=+]+$/
+        };
 
         // Username validator
-        function usernameValidator() {
-            clearTimeout(usernameValidator)
-            defaultMode('username')
-            errorTextHide('username')
+        let usernameCooldownEffect;
+        async function usernameValidator(caller) {
+            if (
+                usernameInput.value.length < 4 ||
+                usernameInput.value.length > 20
+            ) {
+                errorMode(
+                    "username",
+                    "Username has to be 4-20 characters long!",
+                );
+                formValid = false
+                return;
+            }
+
+            if (!regexes.username.test(usernameInput.value)) {
+                errorMode("username", "Username can only contain A-Z, a-z, 0-9, _, -");
+                formValid = false
+                return;
+            }
+
+            await axios
+                .post("/usernameValidator", {
+                    username: usernameInput.value,
+                })
+                .catch((error) => {
+                    errorMode("username", error.response.data);
+                    formValid = false
+                });
+
+            // Available callers: "onSubmit"
+            // It will only show and error when user submits, when filling out the form it will not show error live if an input is empty.
+            if (caller == "onSubmit") {
+                if (!usernameInput.value) {
+                    errorMode("username", "No username specified!");
+                    formValid = false
+                }
+            }
+        }
+
+        // Username event listener to check for changes live
+        usernameInput.addEventListener("input", () => {
+            clearTimeout(usernameCooldownEffect);
+            defaultMode("username");
 
             if (usernameInput.value.length == 0) {
-                defaultMode('username')
-                errorTextHide('username')
-                return
+                defaultMode("username");
+                return;
             }
-            usrenameCooldown = setTimeout(async () => {
-                if (usernameInput.value.length < 4 || usernameInput.value.length > 20) {
-                    errorMode('username')
-                    errorTextDisplay('username', 'Username has to be 4-20 characters long!')
-                    return
-                }
 
-                if (!regexes.username.test(usernameInput.value)) {
-                    errorMode('username')
-                    errorTextDisplay('username', 'Username can only contain A-Z, a-z, 0-9, _, -')
-                    return
-                }
-
-                axios.post("/usernameValidator", {
-                    username: usernameInput.value
-                }).catch(error => {
-                    errorMode('username')
-                    errorTextDisplay('username', error.response.data)
-                });
+            usernameCooldownEffect = setTimeout(() => {
+                usernameValidator('onInput');
             }, 1200);
-        }
-        usernameInput.addEventListener('input', async () => {
-            usernameValidator()
-        })
+        });
 
         // Password validator
-        passwordInput.addEventListener('input', async () => {
-
-            clearTimeout(usernameValidator)
-            defaultMode('username')
-            errorTextHide('username')
-
-            if (usernameInput.value.length == 0) {
-                defaultMode('password')
-                errorTextHide('password')
-                return
+        async function passwordValidator(caller) {
+            if (
+                passwordInput.value.length < 4 ||
+                passwordInput.value.length > 20
+            ) {
+                errorMode(
+                    "password",
+                    "Password has to be 6-128 characters long!",
+                );
+                formValid = false
+                return;
             }
-            usernameValidator = setTimeout(async () => {
-                if (usernameInput.value.length < 4 || usernameInput.value.length > 20) {
-                    errorMode('password')
-                    errorTextDisplay('password', 'Username has to be 4-20 characters long!')
-                    return
-                }
 
-                if (!regexes.password.test(passwordInput.value)) {
-                    errorMode('password')
-                    errorTextDisplay('password', 'Password can only contain A-Z, a-z, 0-9, _, -')
-                    return
+            if (!regexes.password.test(passwordInput.value)) {
+                errorMode("password", "Password can only contain A-Z, a-z, 0-9, _, -");
+                formValid = false
+                return;
+            }
+
+            // Available callers: "onSubmit"
+            // It will only show and error when user submits, when filling out the form it will not show error live if an input is empty.
+            if (caller == "onSubmit") {
+                if (!passwordInput.value) {
+                    errorMode("password", "No password specified!");
+                    formValid = false
                 }
+            }
+        }
+
+        // Password event listener to check for changes live
+        let passwordCooldownEffect;
+        passwordInput.addEventListener("input", () => {
+            clearTimeout(passwordCooldownEffect);
+            defaultMode("password");
+
+            if (passwordInput.value.length == 0) {
+                defaultMode("password");
+                return;
+            }
+
+            passwordCooldownEffect = setTimeout(() => {
+                passwordValidator('onInput');
             }, 1200);
-        })
+        });
 
+        // Email validator
+        let emailCooldownEffect;
+        async function emailValidator() {
+            // Email is optional so if it's empty we skip email validator
+            if (!emailInput.value) return
+
+            // Check if email matches regex /^[a-zA-Z0-9!@#$%^&*()\-_=+]+$/
+            if (!regexes.email.test(emailInput.value)) {
+                errorMode("email", "Email invalid!");
+                formValid = false
+                return;
+            }
+
+            await axios
+                .post("/emailValidator", {
+                    email: emailInput.value,
+                })
+                .catch((error) => {
+                    errorMode("email", error.response.data);
+                    formValid = false
+                });
+        }
+
+        // Email event listener to check for changes live
+        emailInput.addEventListener("input", () => {
+            clearTimeout(emailCooldownEffect);
+            defaultMode("email");
+
+            if (emailInput.value.length == 0) {
+                defaultMode("email");
+                return;
+            }
+
+            emailCooldownEffect = setTimeout(() => {
+                emailValidator('onInput');
+            }, 1200);
+        });
+
+        // Perform important operations on forms submition
         form.addEventListener("submit", (e) => {
             e.preventDefault();
 
-            // Password indicator
-            // const passwordInput = document.getElementById('passwordInput')
-            // passwordInput.addEventListener('input', () => {
-            //     let securityScore = 0
-            //     if ()
-            // })
-            if (!usernameInput.value || !passwordInput.value) {
-                // Submit button animation
-                document.getElementById("submitBtn").classList.remove("shakeAnim");
-                void document.getElementById("submitBtn").offsetWidth;
+            // Setting the form validacy to true, it can change based of the upcoming validators
+            formValid = true
 
-                document.getElementById("submitBtn").classList.add("shakeAnim");
+            // Input validators to check if form is ready to complete
+            usernameValidator();
+            emailValidator();
+            passwordValidator();
 
-                // Triggering error mode for empty input values
-                if (!usernameInput.value) {
-                    errorMode('username')
-                    errorTextDisplay('username', 'No username specified!')
-                }
-                if (!passwordInput.value) {
-                    errorMode('password')
-                    errorTextDisplay('password', 'No password specified!')
-                }
-
+            // If the form is invalid it will cancel further process and play a shake animation
+            if (!formValid) {
+                submitBtn.classList.remove("shakeAnim");
+                void submitBtn.offsetWidth;
+                submitBtn.classList.add("shakeAnim");
                 return
             }
+
+
+            // If it is successfull send it over to backend
             axios
                 .post("/login", {
                     username: usernameInput.value,
@@ -323,16 +331,10 @@
                 })
                 .then((response) => {
                     console.log(response);
-
-                    errorMessage.textContent = "test";
-                    errorMessage.style.color = "green";
                 })
                 .catch((err) => {
-                    errorMessage.style.color = "red";
-                    console.log("t2");
                 });
         });
-
     </script>
     <style>
         @keyframes shakeAnim {
